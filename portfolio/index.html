@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaime Cravid | Technical AI Operator & Prompt Engineer</title>
+    <!-- Tailwind CSS CDN for modern styling without local build steps -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans leading-relaxed">
+
+    <!-- Hero Section -->
+    <header class="max-w-4xl mx-auto px-6 pt-16 pb-12 border-b border-gray-800 space-y-6">
+        <div>
+            <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">Jaime Cravid</h1>
+            <p class="mt-4 text-xl text-emerald-400 font-mono">Technical AI Trainer & Prompt Engineer</p>
+            <p class="mt-4 text-gray-400 max-w-2xl text-lg">
+                I build local automation pipelines, troubleshoot model integration errors, and conduct rigorous technical evaluations for large language models.
+            </p>
+        </div>
+        
+        <!-- Live Metrics Navigation Button (Nested safely inside header for clean alignment) -->
+        <div class="flex gap-4">
+            <a href="dashboard.html" class="inline-flex items-center px-4 py-2 border border-emerald-500 text-sm font-mono font-medium rounded-md text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors">
+                View Live Agent Metrics &rarr;
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-6 py-12 space-y-16">
+
+        <!-- Technical Wins Section -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold text-white tracking-wide uppercase text-sm font-mono text-emerald-500">Key Engineering Wins</h2>
+            
+            <div class="space-y-8">
+                <!-- Win 1 -->
+                <div class="p-6 bg-gray-800 rounded-lg border border-gray-700 space-y-3">
+                    <h3 class="text-xl font-bold text-white">1. Automated "Job Scout Agent" Pipeline</h3>
+                    <p class="text-gray-300">
+                        Designed and built a local automation agent in Python that connects securely to Gmail via IMAP, extracts raw email payloads, screens constraints via the Gemini 2.5 Flash API, and forwards matching contracts directly to a Telegram channel. Includes a rate-limit guard (12s API pacing) and local cache logging to prevent redundant processing.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-400/10 text-emerald-400 font-mono">Python</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-400/10 text-emerald-400 font-mono">Gemini API</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-400/10 text-emerald-400 font-mono">IMAP / SMTP</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-400/10 text-emerald-400 font-mono">Telegram API</span>
+                    </div>
+                </div>
+
+                <!-- Win 2 -->
+                <div class="p-6 bg-gray-800 rounded-lg border border-gray-700 space-y-3">
+                    <h3 class="text-xl font-bold text-white">2. Local Netlify MCP Server Configuration</h3>
+                    <p class="text-gray-300">
+                        Implemented and configured a local Model Context Protocol (MCP) server to grant local LLMs (Claude Desktop) native access to deploy and manage static websites. Diagnosed and resolved a complex 401 Unauthorized OAuth authentication loop by analyzing and overriding localized environment variables hidden within the Claude Desktop sandbox environment.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-400/10 text-emerald-400 font-mono">Model Context Protocol</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-400/10 text-emerald-400 font-mono">Netlify API</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-400/10 text-emerald-400 font-mono">PowerShell</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-400/10 text-emerald-400 font-mono">OAuth 2.0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Linguistic & QA Capabilities -->
+        <section class="space-y-4">
+            <h2 class="text-2xl font-semibold text-white tracking-wide uppercase text-sm font-mono text-emerald-500">Linguistic & Quality Evaluation</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-5 bg-gray-800/50 rounded-lg border border-gray-800 space-y-2">
+                    <h4 class="font-bold text-white">Bilingual Expertise (PT-PT / EN)</h4>
+                    <p class="text-sm text-gray-400">
+                        Native European Portuguese speaker with fluent C2-level English. Highly capable of conducting multi-turn model evaluations, checking for grammatical precision, localized slang, cultural nuances, and idiomatic accuracy.
+                    </p>
+                </div>
+                <div class="p-5 bg-gray-800/50 rounded-lg border border-gray-800 space-y-2">
+                    <h4 class="font-bold text-white">RLHF & Quality Metrics</h4>
+                    <p class="text-sm text-gray-400">
+                        Experienced in completing AI Quality Assessments on global remote platforms. Proficient in evaluating LLM answers for factual correctness, alignment constraints, toxicity safeguards, safety compliance, and stylistic consistency.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-4xl mx-auto px-6 py-8 border-t border-gray-800 text-center text-sm text-gray-500 font-mono">
+        &copy; 2026 Jaime Cravid. Built as a proof-of-work deployment.
+    </footer>
+
+</body>
+</html>

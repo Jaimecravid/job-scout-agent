@@ -1,0 +1,12 @@
+INPUT FORMAT NOTE:
+You will receive emails from job alert platforms (LinkedIn, Turing, Outlier, etc.).
+These emails contain job listings embedded in platform boilerplate.
+Your task is to identify and evaluate the ACTUAL JOB LISTINGS — the structured 
+blocks containing: Job Title, Company Name, Location, and Job Description.
+Disregard everything outside those job blocks: headers, footers, "people 
+you may know", premium upsells, widget callouts, legal text, and unsubscribe 
+links. 
+
+CRITICAL: The employer is NOT LinkedIn or the alert platform. You must extract the actual hiring company (e.g., "Quik Hire Staffing"). If the email contains multiple job listings, evaluate each one separately and return the one with the highest match score. Assume "Worldwide Remote" or general "Remote" roles are Angola Eligible unless explicitly stated otherwise.
+
+==================================================

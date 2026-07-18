@@ -1,0 +1,29 @@
+# Secrets & Credentials
+.env
+*.env
+Master_Context.txt
+
+# Local Databases (CRITICAL SECURITY)
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# Generated Private Artifacts
+outreach_drafts/
+sent/
+interview_prep/
+logs/
+
+# Python Runtime
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor / IDE Caches
+.lsp/
+.clj-kondo/
+.vscode/
+.trae/
+Thumbs.db
