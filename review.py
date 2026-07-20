@@ -22,12 +22,13 @@ except ImportError:
     print("Please ensure 'dashboard.py' is in the same directory.")
     sys.exit(1)
 
-# Define core directory paths relative to the script
+# Define core directory paths relative to the script (Absolute resolution)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DRAFT_DIR = os.path.join(BASE_DIR, "outreach_drafts")
 SENT_DIR = os.path.join(DRAFT_DIR, "sent")
 DB_PATH = os.path.join(BASE_DIR, "data", "tracker.db")
 
+# Allowed status transitions defined by v1.1 Blueprint
 VALID_STATUSES = ['drafted', 'applied', 'interviewing', 'rejected', 'accepted']
 
 def check_cold_start():
@@ -111,23 +112,59 @@ def update_application_status(app_id, new_status):
                 return False
             time.sleep(0.5)
 
-def sync_dashboard_to_netlify():
-    """Silently fails on git/network errors to preserve UX."""
-    generate_dashboard()
-    print("\n🌐 Git Sync: Pushing updated dashboard...")
+def stage_dashboard_securely() -> bool:
+    """
+    Explicitly stages only the generated dashboard HTML.
+    Eliminates broad staging leaks by enforcing strict file-path targeting.
+    """
+    target_relative_path = "portfolio/dashboard.html"
+    target_abs_path = os.path.join(BASE_DIR, target_relative_path)
+    
+    if not os.path.exists(target_abs_path):
+        print(f"   ⚠️  Sync Error: Target file '{target_abs_path}' not found. Staging aborted.")
+        return False
+
     try:
-        # SECURITY FIX: ONLY push the dashboard.html, NEVER the database
-        subprocess.run(["git", "add", "portfolio/dashboard.html"], check=True, cwd=BASE_DIR, capture_output=True, text=True)
+        # Run git add targeting ONLY the sanitized static asset
+        subprocess.run(
+            ["git", "add", target_relative_path],
+            cwd=BASE_DIR,
+            check=True,
+            capture_output=True,
+            text=True
+        )
+        print(f"   🛡️  Git Safe-Stage: Staged exactly '{target_relative_path}'.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"   ⚠️  Git Error: Failed to stage '{target_relative_path}'. ({e.stderr.strip()})")
+        return False
+
+def sync_dashboard_to_netlify():
+    """Compiles the dashboard and pushes only the dashboard.html live."""
+    # 1. Rebuild the static HTML page in /portfolio
+    generate_dashboard()
+    
+    print("\n🌐 Git Sync: Pushing updated dashboard...")
+    
+    # 2. Securely stage ONLY the static dashboard file
+    if not stage_dashboard_securely():
+        print("   ⚠️  Dashboard sync aborted (Staging step failed).")
+        return False
+        
+    try:
+        # 3. Commit with structured message
         msg = f"build: auto-update tracker {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
         subprocess.run(["git", "commit", "-m", msg], check=True, cwd=BASE_DIR, capture_output=True, text=True)
+        
+        # 4. Push to GitHub safely
         subprocess.run(["git", "push", "origin", "main"], check=True, cwd=BASE_DIR, capture_output=True, text=True)
         print("   ✅ Sync Complete: Portfolio updating on Netlify.")
         return True
     except subprocess.CalledProcessError:
-        print("   ⚠️ Dashboard sync will retry next run (Network/Git error).")
+        print("   ⚠️  Dashboard sync will retry next run (Network/Git error).")
         return False
     except Exception:
-        print("   ⚠️ Dashboard sync will retry next run (System error).")
+        print("   ⚠️  Dashboard sync will retry next run (System error).")
         return False
 
 def review_drafts_flow():
@@ -165,6 +202,7 @@ def review_drafts_flow():
             dp = os.path.join(SENT_DIR, sel["filename"])
             if os.path.exists(dp): os.remove(dp)
             shutil.move(sel["path"], dp)
+            print(f"\n📂 Archived: Moved file to '{SENT_DIR}'.")
             if log_application_to_db(metadata["job_id"], metadata["company"], metadata["role"], metadata["email_id"]):
                 sync_dashboard_to_netlify()
             break

@@ -2,6 +2,7 @@ import sqlite3
 import os
 from datetime import datetime
 
+# Resolve absolute paths to prevent Windows pathing conflicts
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "data", "tracker.db")
 OUTPUT_PATH = os.path.join(BASE_DIR, "portfolio", "dashboard.html")
@@ -24,7 +25,10 @@ def anonymize_company(name):
         return "Confidential AI Data Platform"
 
 def generate_dashboard():
+    print("📊 Generating static portfolio dashboard page...")
+    
     if not os.path.exists(DB_PATH):
+        print(f"⚠️ Dashboard Warning: Database not found at '{DB_PATH}'. Cannot generate metrics.")
         return False
 
     try:
@@ -154,6 +158,7 @@ def generate_dashboard():
 </html>"""
         with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
             f.write(html_template)
+        print("✅ New Dashboard HTML compiled locally!")
         return True
     except Exception as e:
         return False
